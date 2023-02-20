@@ -7,6 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
+import {  useDatabaseStore } from "./databse";
 
 export const useUserStore = defineStore("userStore", {
   state: () => ({
@@ -50,6 +51,9 @@ export const useUserStore = defineStore("userStore", {
     },
 
     async logoutUser() {
+
+      const databaseStore = useDatabaseStore()
+      databaseStore.$reset()
       try {
         await signOut(auth).then((resp) => {
           router.push("/login");
